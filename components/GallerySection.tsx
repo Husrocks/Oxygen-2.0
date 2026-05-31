@@ -96,30 +96,25 @@ export default function GallerySection() {
           <span className="text-accent-blue">Legends</span>
         </motion.h2>
 
-        {/* Brand Logos */}
-        <motion.div
-          className="flex flex-wrap justify-center items-center gap-8 md:gap-12 py-12 mb-16 border-b border-gray-800"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-        >
-          {brandLogos.map((brand, index) => (
-            <motion.div
-              key={brand.name}
-              className="flex items-center justify-center w-32 h-20 md:w-40 md:h-24 opacity-60 hover:opacity-100 transition-opacity duration-300"
-              variants={itemVariants}
-              whileHover={{ scale: 1.1, y: -5 }}
-            >
-              <img
-                src={brand.src}
-                alt={brand.alt}
-                className="max-w-full max-h-full object-contain filter brightness-0 invert"
-                loading="lazy"
-              />
-            </motion.div>
-          ))}
-        </motion.div>
+        {/* Brand Logos - Infinite Auto-Scrolling Marquee */}
+        <div className="relative w-full overflow-hidden py-12 mb-16 border-b border-gray-800 mask-gradient">
+          <div className="animate-marquee flex gap-12 md:gap-16 items-center">
+            {/* Tripling the array to make the infinite loop perfectly seamless */}
+            {[...brandLogos, ...brandLogos, ...brandLogos].map((brand, index) => (
+              <div
+                key={`${brand.name}-${index}`}
+                className="flex items-center justify-center w-32 h-20 md:w-40 md:h-24 opacity-40 hover:opacity-100 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 cursor-pointer shrink-0"
+              >
+                <img
+                  src={brand.src}
+                  alt={brand.alt}
+                  className="max-w-full max-h-full object-contain filter brightness-0 invert"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Legends Gallery */}
         <motion.div

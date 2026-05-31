@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'export',
+  basePath: process.env.GITHUB_ACTIONS ? '/Oxygen-2.0' : '',
   images: {
     domains: [
       'images.unsplash.com',
@@ -16,4 +18,5 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+
 

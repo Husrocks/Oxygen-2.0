@@ -106,11 +106,8 @@ export default function HeroSection() {
             }}
             aria-label="Start Free Trial"
           >
-            <motion.div
-              className="absolute inset-0 bg-dark-bg"
-              initial={{ x: '-100%' }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
+            <div
+              className="absolute inset-0 bg-dark-bg -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
             />
             <span className="relative z-10 flex items-center gap-2 group-hover:text-accent-green transition-colors">
               Start Free Trial
@@ -120,12 +117,17 @@ export default function HeroSection() {
 
           <motion.button
             onClick={handleScrollToClasses}
-            className="px-8 py-4 border-2 border-dark-text text-dark-text font-bold uppercase tracking-wider rounded-full hover:bg-dark-text hover:text-dark-bg transition-all duration-300"
+            className="group relative px-8 py-4 border-2 border-dark-text text-dark-text font-bold uppercase tracking-wider rounded-full overflow-hidden"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             aria-label="View Classes"
           >
-            View Classes
+            <div
+              className="absolute inset-0 bg-dark-text -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
+            />
+            <span className="relative z-10 group-hover:text-dark-bg transition-colors duration-300">
+              View Classes
+            </span>
           </motion.button>
         </motion.div>
       </motion.div>
