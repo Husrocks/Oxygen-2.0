@@ -78,27 +78,21 @@ export default function TrainersSection() {
           </motion.p>
         </div>
 
-        {/* Dynamic Wipe/Unveil Card Container */}
-        <div className="relative w-full max-w-5xl mx-auto pb-32">
-          {trainers.map((trainer, index) => (
-            <div
-              key={trainer.name}
-              className="relative w-full h-[90vh] sm:h-[100vh]"
-              style={{
-                zIndex: trainers.length - index,
-              }}
-            >
-              <div className="sticky top-32 w-full group">
-                {/* Wipe Card */}
+        {/* Infinite Auto-Scrolling Marquee Card Container */}
+        <div className="relative w-full overflow-hidden py-12 mask-gradient pb-32">
+          <div className="animate-marquee flex gap-8 md:gap-12 items-center">
+            {[...trainers, ...trainers, ...trainers].map((trainer, index) => (
+              <div
+                key={`${trainer.name}-${index}`}
+                className="group relative shrink-0"
+              >
+                {/* Compact Card */}
                 <motion.div
-                  className={`bg-dark-bg border border-gray-800 rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:border-white/10 transition-all duration-500 flex flex-col md:flex-row h-auto md:h-[480px] w-full p-3 ${trainer.glow}`}
-                  initial={{ opacity: 0, y: 60, scale: 0.96 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: false, margin: '-60px' }}
-                  transition={{ duration: 0.7, ease: 'easeOut' }}
+                  className={`bg-dark-bg border border-gray-800 rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:border-white/10 transition-all duration-500 flex flex-col h-[520px] w-[320px] md:w-[360px] p-2 ${trainer.glow}`}
+                  whileHover={{ y: -10 }}
                 >
                   {/* Image Section */}
-                  <div className="w-full md:w-1/2 h-72 md:h-full relative overflow-hidden rounded-2xl">
+                  <div className="w-full h-[240px] relative overflow-hidden rounded-2xl shrink-0">
                     <img
                       src={trainer.image}
                       alt={trainer.name}
@@ -106,60 +100,60 @@ export default function TrainersSection() {
                       loading="lazy"
                     />
                     {/* Neon HUD laser marker */}
-                    <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-dark-bg via-transparent to-transparent z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-transparent to-transparent z-10" />
                     
                     {/* Cyber Overlay coordinate stats */}
-                    <div className="absolute bottom-4 left-4 z-20 font-mono text-[9px] text-white/30 tracking-widest pointer-events-none">
-                      [OXYGEN_COACH_ID: {index + 1}09{index}]
+                    <div className="absolute bottom-3 left-3 z-20 font-mono text-[9px] text-white/30 tracking-widest pointer-events-none">
+                      [OXYGEN_COACH_ID: {(index % trainers.length) + 1}09{index % trainers.length}]
                     </div>
                   </div>
 
                   {/* Content Details Section */}
-                  <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-between z-20 bg-dark-bg">
+                  <div className="w-full p-6 flex flex-col justify-between flex-grow z-20 bg-dark-bg">
                     <div>
                       {/* Specialty pill badge */}
-                      <div className="flex items-center gap-1.5 bg-accent-green/10 text-accent-green px-3 py-1 rounded-full text-xs font-bold w-max border border-accent-green/20 mb-6 font-mono uppercase tracking-wider">
-                        <Sparkles className="w-3.5 h-3.5" />
-                        {trainer.specialty.split(' ')[0]} Specialist
+                      <div className="flex items-center gap-1.5 bg-accent-green/10 text-accent-green px-2.5 py-1 rounded-full text-[10px] font-bold w-max border border-accent-green/20 mb-4 font-mono uppercase tracking-wider">
+                        <Sparkles className="w-3 h-3" />
+                        {trainer.specialty.split(' ')[0]} Spec
                       </div>
 
                       {/* Trainer Name */}
-                      <h3 className="text-4xl md:text-5xl font-black uppercase text-white font-display mb-4 tracking-wide group-hover:text-accent-green transition-colors duration-300">
+                      <h3 className="text-2xl font-black uppercase text-white font-display mb-2 tracking-wide group-hover:text-accent-green transition-colors duration-300">
                         {trainer.name}
                       </h3>
                       
-                      <p className="text-gray-400 text-sm md:text-base font-semibold mb-6 italic leading-relaxed">
+                      <p className="text-gray-400 text-xs font-medium mb-4 italic line-clamp-2">
                         "{trainer.quote}"
                       </p>
                     </div>
 
                     {/* Skills lists / specs */}
-                    <div className="space-y-4 border-t border-gray-800 pt-6">
-                      <div className="flex items-center gap-3 text-gray-200">
-                        <div className="w-8 h-8 rounded-full bg-accent-green/10 flex items-center justify-center border border-accent-green/10">
-                          <Award className="w-4 h-4 text-accent-green" />
+                    <div className="space-y-3 border-t border-gray-800 pt-4 mt-auto">
+                      <div className="flex items-center gap-2.5 text-gray-200">
+                        <div className="w-6 h-6 rounded-full bg-accent-green/10 flex items-center justify-center border border-accent-green/10 shrink-0">
+                          <Award className="w-3 h-3 text-accent-green" />
                         </div>
-                        <div>
-                          <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest font-mono">Certification</p>
-                          <p className="text-sm font-semibold">{trainer.certification}</p>
+                        <div className="overflow-hidden">
+                          <p className="text-[8px] text-gray-500 font-bold uppercase tracking-widest font-mono">Cert</p>
+                          <p className="text-xs font-semibold truncate">{trainer.certification}</p>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-3 text-gray-200">
-                        <div className="w-8 h-8 rounded-full bg-accent-blue/10 flex items-center justify-center border border-accent-blue/10">
-                          <Dumbbell className="w-4 h-4 text-accent-blue" />
+                      <div className="flex items-center gap-2.5 text-gray-200">
+                        <div className="w-6 h-6 rounded-full bg-accent-blue/10 flex items-center justify-center border border-accent-blue/10 shrink-0">
+                          <Dumbbell className="w-3 h-3 text-accent-blue" />
                         </div>
-                        <div>
-                          <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest font-mono">Field Experience</p>
-                          <p className="text-sm font-semibold">{trainer.experience}</p>
+                        <div className="overflow-hidden">
+                          <p className="text-[8px] text-gray-500 font-bold uppercase tracking-widest font-mono">Exp</p>
+                          <p className="text-xs font-semibold truncate">{trainer.experience}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </motion.div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
